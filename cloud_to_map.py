@@ -48,7 +48,7 @@ roscloud=pcl.PointCloud()
 # Remove points with NaN values from cloud
 sleep(4)
 cloud=roscloud
-processing=1
+
 filtered=pcl.PointCloud()
 arr=cloud.to_array()
 arr= arr[~np.isnan(arr).any(1)]
@@ -135,11 +135,15 @@ for point in cloud:
                 grid[xgrid][ygrid]=1
             except IndexError as e:
                 print e, x, xgrid, y, ygrid, gridsize, z
-        #elif grid[xgrid][ygrid]!=1:
-        #    grid[xgrid][ygrid]=0
+        elif grid[xgrid][ygrid]!=1:
+            grid[xgrid][ygrid]=0
     
-processing=0
+print(grid.shape)
+gridfile=open("grid.txt", "w")
+string=str(camheight*1000)+","+str(cellsize*1000)+"\n"
+np.savetxt("grid.txt", grid, "%1.2f", header=string)
+
 plt.imshow(grid, cmap='gray_r', interpolation='none', origin='lower')
 plt.show()    
 
-
+gridfile.close()

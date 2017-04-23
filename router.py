@@ -352,7 +352,7 @@ if __name__ == "__main__":
     fin=open("grid.txt","r")
     line=fin.readline()
     arr=line.strip().split(",")
-    cell=int(arr[1])
+    cell=float(arr[1])
 
     fin.close()
 
@@ -378,10 +378,10 @@ if __name__ == "__main__":
         while not rospy.is_shutdown():
             if route_flag == 2:
                 print("from dock")
-                (y, x)=m.backconvert((0,500))
+                (x, y)=m.backconvert((0,500))
                 start=(x,y)
             else:
-                (y,x)=m.backconvert(robot_pos) #FIX THIS!!!!!
+                (x,y)=m.backconvert(robot_pos) #FIX THIS!!!!!
                 print("from ", robot_pos)
                 start = (x,y)
       
@@ -393,10 +393,6 @@ if __name__ == "__main__":
                 print("to ", user_pos)
                 (y,x) = m.backconvert(user_pos)
                 goal=(x,y)        
-
-                (y, x) = m.backconvert((700, 3500))
-                goal= (x,y)
-            #   goal=(21,16)    
 
             path = a_star_search(m, start, goal)
             #print path    
